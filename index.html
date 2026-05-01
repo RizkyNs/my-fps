@@ -125,12 +125,44 @@
         #screen-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 0.1s; z-index: 10; }
         #aim-helper-text { position: absolute; top: 50%; right: 10%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 14px; text-align: center; pointer-events: none; display: none; }
 
-        /* Khusus Layar Rank (End Screen) - Fix Untuk Mobile */
-        #end-screen .modal-box {
-            max-height: 85vh;
-            overflow-y: auto;
-            padding-bottom: 20px;
+        /* WATERMARK / CREDIT CSS - BUBBLE STYLE */
+        .watermark {
+            position: absolute; top: 15px; right: 20px; font-size: 13px; color: rgba(255, 255, 255, 0.8);
+            display: flex; align-items: center; gap: 8px; font-weight: 500; pointer-events: auto;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); letter-spacing: 0.5px; z-index: 100;
         }
+        .watermark svg.gemini-logo { width: 16px; height: 16px; fill: #8ab4f8; }
+        
+        /* Bubble Chat / Glassmorphism Button */
+        .watermark a {
+            background: rgba(255, 255, 255, 0.15); /* Efek Kaca */
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 14px;
+            border-radius: 16px 16px 16px 4px; /* Curved melengkung dengan ekor di kiri bawah */
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            text-shadow: none; /* Hilangkan bayangan dalam bubble agar bersih */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .watermark a svg { width: 16px; height: 16px; }
+        
+        .watermark a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        .watermark a:active {
+            transform: translateY(0);
+        }
+
+        /* Khusus Layar Rank (End Screen) */
+        #end-screen .modal-box { max-height: 85vh; overflow-y: auto; padding-bottom: 20px; }
 
         /* Tabel Ranking MVP */
         .rank-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 18px; text-align: center; background: rgba(0,0,0,0.5); border-radius: 8px; overflow: hidden; }
@@ -150,16 +182,20 @@
             #damage-indicator-container { width: 200px; height: 200px; margin-left: -100px; margin-top: -100px; }
             .hit-mark { transform-origin: 20px 100px; }
             
-            /* -- FIX MINIMAP KHUSUS MOBILE -- */
-            #minimap { width: 70px; height: 70px; } /* Diperkecil jadi 70px */
-            #btn-pause { right: 100px; padding: 4px 10px; font-size: 12px; } /* Disesuaikan agar dekat minimap */
-            #killfeed { top: 100px; } /* Dinaikkan posisinya karena minimap lebih kecil */
+            #minimap { width: 70px; height: 70px; } 
+            #btn-pause { right: 100px; padding: 4px 10px; font-size: 12px; } 
+            #killfeed { top: 100px; } 
             
-            /* Fix Posisi Tombol Main Lagi Khusus Mobile */
             #end-screen .modal-box { width: 90%; max-width: none; padding: 15px; }
             #end-screen .btn-play { width: 100%; margin-top: 15px; }
             .rank-table { font-size: 13px; }
             .rank-table th, .rank-table td { padding: 8px 4px; }
+
+            /* Watermark menyesuaikan mobile */
+            .watermark { font-size: 11px; top: 10px; right: 15px; gap: 5px; }
+            .watermark svg.gemini-logo { width: 14px; height: 14px; }
+            .watermark a { padding: 4px 10px; font-size: 11px; border-radius: 12px 12px 12px 3px; gap: 4px; }
+            .watermark a svg { width: 14px; height: 14px; }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -211,6 +247,16 @@
 
     <!-- Layar Pause -->
     <div id="pause-screen" class="overlay-screen">
+        <!-- Watermark Pause Screen -->
+        <div class="watermark">
+            Made with 
+            <svg class="gemini-logo" viewBox="0 0 24 24"><path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"/></svg>
+            Gemini AI by 
+            <a href="https://instagram.com/rnscuy" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                @rnscuy
+            </a>
+        </div>
         <div class="modal-box">
             <h1>GAME JEDA</h1>
             <p>Pertandingan sedang dihentikan sementara.</p>
@@ -220,6 +266,16 @@
 
     <!-- Layar End Game (Layar Rank) -->
     <div id="end-screen" class="overlay-screen" style="z-index: 30;">
+        <!-- Watermark End Screen -->
+        <div class="watermark">
+            Made with 
+            <svg class="gemini-logo" viewBox="0 0 24 24"><path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"/></svg>
+            Gemini AI by 
+            <a href="https://instagram.com/rnscuy" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                @rnscuy
+            </a>
+        </div>
         <div class="modal-box">
             <h1 id="end-title">PERTANDINGAN SELESAI</h1>
             <div id="ranking-list"></div>
@@ -230,6 +286,16 @@
 
     <!-- Layar Mulai -->
     <div id="blocker" class="overlay-screen" style="display: flex;">
+        <!-- Watermark Main Screen -->
+        <div class="watermark">
+            Made with 
+            <svg class="gemini-logo" viewBox="0 0 24 24"><path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"/></svg>
+            Gemini AI by 
+            <a href="https://instagram.com/rnscuy" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                @rnscuy
+            </a>
+        </div>
         <div class="modal-box">
             <h1>FPS E-SPORTS</h1>
             <p>
